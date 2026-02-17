@@ -10,7 +10,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-num_pages = 5
+num_pages = 4
 
 
 async def get_page_cids(url, max_retries=3):
@@ -25,13 +25,9 @@ async def get_page_cids(url, max_retries=3):
             try:
                 page = await browser.get(url)
 
-                try:
-                    await page.wait_for_idle()
-                except Exception:
-                    logger.debug(f"Idle wait timed out for {url}, proceeding anyway.")
-                    await asyncio.sleep(2)
+                await asyncio.sleep(3)
 
-                await page.wait_for(".VkpGBb", timeout=10)
+                await page.wait_for(".VkpGBb", timeout=5)
                 cards = await page.query_selector_all(".VkpGBb")
 
                 if len(cards) < 5:
